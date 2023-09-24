@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <form action="" method="post">
+        <div>
+            <label for="nombre">Nombre</label>
+            <input name="nombre" required value="{{ request.form.nombre }}">
+        </div>
+        <div>
+            <label for="correo">Correo</label>
+            <input type="email" name="correo" required value="{{ request.form.correo }}">
+        </div>
+        <div>
+            <label for="password">Contraseña</label>
+            <input type="password" name="passwd" required value="{{ request.form.passwd }}">
+        </div>
+        <input type="submit" value="Registrar">
+    </form>
+</body>
+</html>
