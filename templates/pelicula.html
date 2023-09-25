@@ -8,23 +8,76 @@
 </head>
 <body>
     <div>
-        <ul>
-            <li>
-                <a href="registrar">Crear pelicula</a>
-            </li>
-            <li>
-                <a href="leer">Leer pelicula</a>
-            </li>
-            <li>
-                <a href="actualizar">Actualizar pelicula</a>
-            </li>
-            <li>
-                <a href="eliminar">Eliminar pelicula</a>
-            </li>
-            <li>
-                <a href="/">Regresar</a>
-            </li>
-        </ul>
+        <form action="registrar" method="post">
+            <div>
+                <label for="nombre">Nombre</label>
+                <input name="nombre" required value="{{ request.form.nombre }}">
+            </div>
+            <div>
+                <label for="genero">Genero</label>
+                <input name="genero" required value="{{ request.form.genero }}">
+            </div>
+            <div>
+                <label for="duracion">Duracion</label>
+                <input type="number" name="duracion" required value="{{ request.form.duracion }}">
+            </div>
+            <div>
+                <label for="inventario">Inventario</label>
+                <input type="number" name="inventario" required value="{{ request.form.inventario }}">
+            </div>
+            <input type="submit" value="Registrar">
+        </form>
+    </div>
+    <div>
+        <table>
+        <tr>
+            <td>ID</td>
+            <td>Nombre</td>
+            <td>Genero</td>
+            <td>Duracion</td>
+            <td>Inventario</td>
+        </tr>
+        {% if peliculas%}
+            {% for pelicula in peliculas%}
+                <tr>
+                    <td>{{pelicula.idPelicula}}</td>
+                    <td>{{pelicula.nombre}}</td>
+                    <td>{{pelicula.genero}}</td>
+                    <td>{{pelicula.duracion}}</td>
+                    <td>{{pelicula.inventario}}</td>
+                    <td><a href="{{url_for('movie.actualizar_pelicula', id=pelicula.idPelicula)}}">Edit</a></td>
+                    <td><a href="{{url_for('movie.eliminar_pelicula', id=pelicula.idPelicula)}}">Delete</a></td>
+                </tr>
+            {%endfor%}
+        {% endif%}
+        </table>
+    </div>
+    <div>
+        {% if pelicula%}
+        <form action="actualizar" method="post">
+            <div>
+                <label for="id"></label>
+                <input type="hidden" name="id" value="{{ pelicula.idPelicula }}">
+            </div>
+            <div>
+                <label for="nombre">Nombre</label>
+                <input name="nombre" required value="{{ pelicula.nombre }}">
+            </div>
+            <div>
+                <label for="genero">Genero</label>
+                <input name="genero" required value="{{ pelicula.genero }}">
+            </div>
+            <div>
+                <label for="duracion">Duracion</label>
+                <input type="number" name="duracion" required value="{{ pelicula.duracion }}">
+            </div>
+            <div>
+                <label for="inventario">Inventario</label>
+                <input type="number" name="inventario" required value="{{ pelicula.inventario }}">
+            </div>
+            <input type="submit" value="Actualizar">
+        </form>
+        {%endif%}
     </div>
 </body>
 </html>

@@ -20,11 +20,7 @@ def registrar_usuario():
         password = request.form['passwd']
         correo = request.form['correo']
         status = add_user(nombre, correo, password)
-        if status:
-            return 'OK'
-        else:
-            return 'ERROR'
-    return render_template('user-registration.html')
+    return redirect(url_for('user.main_view_user_controller'))
 
 @user.route('/actualizar/<string:id>', methods=('GET', 'POST'))
 def actualizar_usuario(id):
@@ -43,13 +39,3 @@ def actualizar_usuario(id):
 def eliminar_usuario(id):
     status = delete_user(id)
     return redirect(url_for('user.main_view_user_controller'))
-
-@user.route('/error-message')
-def example_flash():
-    mensaje = 'Hola soy un mensaje'
-    r = randint(0,2)
-    if r == 0:
-        flash(mensaje)
-    return render_template('error.html')
-
-

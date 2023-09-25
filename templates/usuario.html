@@ -37,7 +37,7 @@
                     <td>{{usuario.idUsuario}}</td>
                     <td>{{usuario.nombre}}</td>
                     <td>{{usuario.email}}</td>
-                    <td><a href="{{url_for('user.actualizar_usuario', id=usuario.idUsuario)}}">edit</a></td>
+                    <td><a href="{{url_for('user.actualizar_usuario', id=usuario.idUsuario)}}">Edit</a></td>
                     <td><a href="{{url_for('user.eliminar_usuario', id=usuario.idUsuario)}}">Delete</a></td>
                 </tr>
             {%endfor%}
