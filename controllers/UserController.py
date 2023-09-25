@@ -4,7 +4,6 @@ from model.model_usuario import get_all_users
 from model.model_usuario import get_user_by_id
 from model.model_usuario import update_user_name
 from model.model_usuario import update_user_email
-from model.model_usuario import update_user_passwrd
 from model.model_usuario import delete_user
 from model.model_usuario import add_user
 
@@ -38,55 +37,33 @@ def leer_usuario():
     tabla += "</table>"
     return tabla
 
-@user.route('/actualizar')
+@user.route('/actualizar', methods=('GET', 'POST'))
 def actualizar_usuario():
-    id_usuario = request.args.get('id')
-    if id_usuario:
-        usuario = get_user_by_id(int(id_usuario));
-        # Si no existe el usuario
-        if not usuario:
-            # Enviamos mensaje de usuario no encontrado
-            flash('Usuario no encontrado')
-        return  render_template('user-update.html', usuario = usuario)
-    else:
-        return render_template('user-update.html')
-
-@user.route('/nombre', methods = ('GET', 'POST'))
-def actualizar_nombre():
     if request.method == 'POST':
-        id_user  = request.args.get('id')
-        nuevo_nombre = request.form['nombre'];
-        status = update_user_name(id_user,nuevo_nombre)
-        return f"id = {id_user} \n nuevo_nombre = {nuevo_nombre}"
+        id_user = request.form['id']
+        nuevo_nombre = request.form['nombre']
+        nuevo_email = request.form['correo']
+        update_user_name(id_user,nuevo_nombre)
+        update_user_email(id_user, nuevo_email)
+        return f"id={id_user}<br/>nuevo_nombre={nuevo_nombre}<br/> {nuevo_email}"
     else:
-        return render_template('user-update-name.html')
-
-@user.route('/correo', methods = ('GET', 'POST'))
-def actualizar_correo():
-    if request.method == 'POST':
-        id_user  = request.args.get('id')
-        nuevo_correo = request.form['correo'];
-        status = update_user_email(id_user,nuevo_correo)
-        return f"id = {id_user} \n nuevo_email = {nuevo_correo}"
-    else:
-        return render_template('user-update-email.html')
-
-@user.route('/contraseña', methods = ('GET', 'POST'))
-def actualizar_contrasenia():
-    if request.method == 'POST':
-        id_user  = request.args.get('id')
-        nuevo_password = request.form['password'];
-        status = update_user_passwrd(id_user,nuevo_password)
-        return f"id = {id_user} \n nuevo_password = {nuevo_password}"
-    else:
-        return render_template('user-update-password.html')
+        id_usuario = request.args.get('id')
+        if id_usuario:
+            usuario = get_user_by_id(int(id_usuario))
+            # Si no existe el usuario
+            if not usuario:
+                # Enviamos mensaje de usuario no encontrado
+                flash('Usuario no encontrado')
+            return  render_template('user-update.html', usuario = usuario)
+        else:
+            return render_template('user-update.html')
 
 @user.route('/eliminar', methods = ('GET', 'POST'))
 def eliminar_usuario():
     if request.method == 'POST':
         id_user = request.form['id']
         status = delete_user(id_user)
-        return 'Deleted '
+        return 'Deleted'
     else:
         return render_template('user-delete.html')
 

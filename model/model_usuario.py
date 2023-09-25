@@ -35,12 +35,6 @@ def update_user_email(id, new_email):
     db.session.commit()
     return True
 
-def update_user_passwrd(id, new_passwrd):
-    usuario = get_user_by_id(id)
-    usuario.password = sha256(cipher(new_passwrd)).hexdigest()
-    db.session.commit()
-    return True
-
 def delete_user(id):
     usuario = get_user_by_id(id)
     db.session.delete(usuario)

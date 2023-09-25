@@ -8,18 +8,17 @@
 </head>
 <body>
     {% if usuario%}
-        <h1>Elige que campo actualizar</h1>
-        <ul>
-            <li>
-                <a href="nombre?id={{ usuario.idUsuario }}">nombre</a>
-            </li>
-            <li>
-                <a href="correo?id={{ usuario.idUsuario }}">correo</a>
-            </li>
-            <li>
-                <a href="contraseña?id={{ usuario.idUsuario }}">contraseña</a>
-            </li>
-        </ul>
+    <form action="/user/actualizar" method="post">
+        <label for="nombre">Nombre</label>
+        <input name="nombre" required value="{{ usuario.nombre }}">
+
+        <label for="correo">Correo</label>
+        <input type="email" name="correo" required value="{{ usuario.email }}">
+
+        <label for="id"></label>
+        <input type="hidden" name="id" value="{{ usuario.idUsuario }}">
+        <input type="submit" value="Actualizar">
+    </form>
     {% else %}
         {% with messages = get_flashed_messages()%}
         {% if messages%}
