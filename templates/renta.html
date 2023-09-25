@@ -4,36 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='view.css')}}">
     <title>Renta</title>
 </head>
 <body>
-    <div>
+    <div class="content-create">
+        {% with messages = get_flashed_messages(category_filter=['error'])%}
+            {%for message in messages%}
+            <div class="errors-content">
+                <h1 class="error" style="color: red;">{{message}}</h1>
+            </div>
+            {%endfor%}
+        {% endwith%}
         <form action="registrar" method="post">
-            <div>
+            <div class="field">
                 <label for="id_usuario">ID Usuario</label>
                 <input type="number" min="1" name="id_usuario" required value="{{ request.form.id_usuario }}">
             </div>
-            <div>
+            <div class="field">
                 <label for="id_pelicula">ID Pelicula</label>
                 <input type="number" min="1" name="id_pelicula" required value="{{ request.form.id_pelicula }}">
             </div>
-            <div>
+            <div class="field">
                 <label for="fecha_renta">Fecha de renta</label>
                 <input type="date" name="fecha_renta" required value="{{ request.form.fecha_renta }}">
             </div> 
-            <div>
+            <div class="field">
                 <label for="dias_de_renta">Dias de renta</label>
                 <input type="number" min="1" name="dias_de_renta" required value="{{ request.form.dias_de_renta }}">
             </div>
-            <div>
-                <label for="estatus">Estatus</label>
-                <input type="number" min="0" max="1" name="estatus" required value="{{ request.form.estatus }}">
-            </div>
-            <input type="submit" value="Registrar">
+            <input id="submit" type="submit" value="Registrar">
         </form>
     </div>
-    <div>
-        <table>
+    <div class="content-read">
+        <table class="content-table">
         <tr>
             <td>ID</td>
             <td>ID Usuario</td>
@@ -44,14 +48,18 @@
         </tr>
         {% if rentas%}
             {% for renta in rentas%}
+                {%if renta.estatus%}
                 <tr>
+                {% else %}
+                <tr class="expired">
+                {%endif%}
                     <td>{{renta.idRentar}}</td>
                     <td>{{renta.idUsuario}}</td>
                     <td>{{renta.idPelicula}}</td>
                     <td>{{renta.fecha_renta}}</td>
                     <td>{{renta.dias_de_renta}}</td>
                     <td>{{renta.estatus}}</td>
-                    <td><a href="{{url_for('rent.actualizar_renta', id=renta.idRentar)}}">Edit</a></td>
+                    <td id="edit-content"><a href="{{url_for('rent.actualizar_renta', id=renta.idRentar)}}">Edit</a></td>
                 </tr>
             {%endfor%}
         {% endif%}
@@ -59,18 +67,28 @@
     </div>
     <div>
         {% if renta%}
-        <form action="actualizar" method="post">
-            <div>
-                <label for="id"></label>
-                <input type="hidden" name="id" value="{{ renta.idRentar }}">
-            </div>
-            <div>
-                <label for="estatus">Estatus</label>
-                <input type="number" min="0" max="1" name="estatus" required value="{{ renta.estatus }}">
-            </div>
-            <input type="submit" value="Actualizar">
-        </form>
+        <div class="content-update">
+            <form action="actualizar" method="post">
+                <div>
+                    <label for="id"></label>
+                    <input type="hidden" name="id" value="{{ renta.idRentar }}">
+                </div>
+                <div>
+                    <label for="estatus">Estatus</label>
+                    <input type="number" min="0" max="1" name="estatus" required value="{{ renta.estatus }}">
+                </div>
+                <div>
+                    <input id="submit" type="submit" value="Actualizar">
+                </div>
+                <div>
+                    <a href="/rent">Cancelar</a>
+                </div>
+            </form>
+        </div>
         {%endif%}
+    </div>
+    <div class="content-back">
+        <a href="/">Regresar</a>
     </div>
 </body>
 </html>

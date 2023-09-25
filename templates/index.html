@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
     <title>Clonbuster</title>
 </head>
 <body>
-    <div>
-        <ul>
-            <li><a href="user">Cliente</a></li>
-            <li><a href="movie">Pelicula</a></li>
-            <li><a href="rent">Renta</a></li>
-        </ul>
+    <div class="cards">
+        <div class="card card-one">
+            <p class="content">
+                <a href="user">Usuario</a>
+            </p>
+        </div>
+
+        <div class="card card-two">
+            <p class="content">
+                <a href="rent">Renta</a>
+            </p>
+        </div>
+
+        <div class="card card-three">
+            <p class="content">
+                <a href="movie">Pelicula</a>
+            </p>
+        </div>  
     </div>
 </body>
 </html>

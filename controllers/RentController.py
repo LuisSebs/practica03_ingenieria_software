@@ -3,10 +3,12 @@ from model.model_rentas import get_all_rents
 from model.model_rentas import get_rent_by_id
 from model.model_rentas import add_rent
 from model.model_rentas import update_rent_status
+from datetime import date
 rent = Blueprint('rent', __name__, url_prefix='/rent')
 
 @rent.route('/')
 def main_view_rent_controller():
+    print(date.today())
     return render_template('renta.html', rentas = get_all_rents())
 
 @rent.route('/registrar', methods=('GET', 'POST'))
@@ -16,9 +18,9 @@ def registrar_renta():
         id_pelicula = request.form['id_pelicula']
         fecha_renta = request.form['fecha_renta']
         dias_de_renta = request.form['dias_de_renta']
-        estatus = request.form['estatus']
-        print(f"id_usuario: {id_usuario}\n id_pelicula: {id_pelicula}\n fecha_renta: {type(fecha_renta)}\n dias_renta: {dias_de_renta}\n estatus: {estatus}")
-        status = add_rent(id_usuario,id_pelicula,fecha_renta,int(dias_de_renta),int(estatus))
+        status = add_rent(id_usuario,id_pelicula,fecha_renta,int(dias_de_renta))
+        if not status:
+            flash('No hay en inventario la pelicula que quieres','error')
     return redirect(url_for('rent.main_view_rent_controller'))
 
 @rent.route('/actualizar/<string:id>', methods=('GET', 'POST'))

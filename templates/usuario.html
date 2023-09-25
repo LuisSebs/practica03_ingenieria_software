@@ -4,28 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='view.css')}}">
     <title>Usuario</title>
 </head>
 <body>
-    <div>
+    <div class="content-create">
         <form action="registrar" method="post">
-            <div>
+            <div class="field">
                 <label for="nombre">Nombre</label>
                 <input name="nombre" required value="{{ request.form.nombre }}">
             </div>
-            <div>
+            <div class="field">
                 <label for="correo">Correo</label>
                 <input type="email" name="correo" required value="{{ request.form.correo }}">
             </div>
-            <div>
+            <div class="field">
                 <label for="password">Contraseña</label>
                 <input type="password" name="passwd" required value="{{ request.form.passwd }}">
             </div>
-            <input type="submit" value="Registrar">
+            <input id="submit" type="submit" value="Registrar">
         </form>
     </div>
-    <div>
-        <table>
+    <div class="content-read">
+        <table class="content-table">
         <tr>
             <td>ID</td>
             <td>Nombre</td>
@@ -37,8 +38,8 @@
                     <td>{{usuario.idUsuario}}</td>
                     <td>{{usuario.nombre}}</td>
                     <td>{{usuario.email}}</td>
-                    <td><a href="{{url_for('user.actualizar_usuario', id=usuario.idUsuario)}}">Edit</a></td>
-                    <td><a href="{{url_for('user.eliminar_usuario', id=usuario.idUsuario)}}">Delete</a></td>
+                    <td id="edit-content"><a href="{{url_for('user.actualizar_usuario', id=usuario.idUsuario)}}">Edit</a></td>
+                    <td id="delete-content"><a href="{{url_for('user.eliminar_usuario', id=usuario.idUsuario)}}">Delete</a></td>
                 </tr>
             {%endfor%}
         {% endif%}
@@ -46,19 +47,33 @@
     </div>
     <div>
         {% if usuario%}
-        <form action="actualizar" method="post">
-            <label for="id"></label>
-            <input type="hidden" name="id" value="{{ usuario.idUsuario }}">
-
-            <label for="nombre">Nombre</label>
-            <input name="nombre" required value="{{ usuario.nombre }}">
-    
-            <label for="correo">Correo</label>
-            <input type="email" name="correo" required value="{{ usuario.email }}">
-    
-            <input type="submit" value="Actualizar">
-        </form>
+        <div class="content-update">
+            <form action="actualizar" method="post">
+                <div>
+                    <label for="id"></label>
+                    <input type="hidden" name="id" value="{{ usuario.idUsuario }}">
+                </div>
+                <div>
+                    <label for="nombre">Nombre</label>
+                    <input name="nombre" required value="{{ usuario.nombre }}">
+        
+                </div>
+                <div>
+                    <label for="correo">Correo</label>
+                    <input type="email" name="correo" required value="{{ usuario.email }}">
+                </div>
+                <div>
+                    <input id="submit" type="submit" value="Actualizar">
+                </div>
+                <div>
+                    <a href="/user">Cancelar</a>
+                </div>
+            </form>
+        </div>
         {%endif%}
+    </div>
+    <div class="content-back">
+        <a href="/">Regresar</a>
     </div>
 </body>
 </html>

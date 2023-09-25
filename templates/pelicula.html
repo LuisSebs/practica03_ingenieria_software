@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='view.css')}}">
     <title>Pelicula</title>
 </head>
 <body>
-    <div>
+    <div class="content-create">
         <form action="registrar" method="post">
-            <div>
+            <div class="field">
                 <label for="nombre">Nombre</label>
                 <input name="nombre" required value="{{ request.form.nombre }}">
             </div>
-            <div>
+            <div class="field">
                 <label for="genero">Genero</label>
                 <input name="genero" required value="{{ request.form.genero }}">
             </div>
@@ -21,15 +22,15 @@
                 <label for="duracion">Duracion</label>
                 <input type="number" name="duracion" required value="{{ request.form.duracion }}">
             </div>
-            <div>
+            <div class="field">
                 <label for="inventario">Inventario</label>
                 <input type="number" name="inventario" required value="{{ request.form.inventario }}">
             </div>
-            <input type="submit" value="Registrar">
+            <input id = "submit" type="submit" value="Registrar">
         </form>
     </div>
-    <div>
-        <table>
+    <div class="content-read">
+        <table class="content-table">
         <tr>
             <td>ID</td>
             <td>Nombre</td>
@@ -45,8 +46,8 @@
                     <td>{{pelicula.genero}}</td>
                     <td>{{pelicula.duracion}}</td>
                     <td>{{pelicula.inventario}}</td>
-                    <td><a href="{{url_for('movie.actualizar_pelicula', id=pelicula.idPelicula)}}">Edit</a></td>
-                    <td><a href="{{url_for('movie.eliminar_pelicula', id=pelicula.idPelicula)}}">Delete</a></td>
+                    <td id="edit-content"><a href="{{url_for('movie.actualizar_pelicula', id=pelicula.idPelicula)}}">Edit</a></td>
+                    <td id="delete-content"><a href="{{url_for('movie.eliminar_pelicula', id=pelicula.idPelicula)}}">Delete</a></td>
                 </tr>
             {%endfor%}
         {% endif%}
@@ -54,30 +55,40 @@
     </div>
     <div>
         {% if pelicula%}
-        <form action="actualizar" method="post">
-            <div>
-                <label for="id"></label>
-                <input type="hidden" name="id" value="{{ pelicula.idPelicula }}">
-            </div>
-            <div>
-                <label for="nombre">Nombre</label>
-                <input name="nombre" required value="{{ pelicula.nombre }}">
-            </div>
-            <div>
-                <label for="genero">Genero</label>
-                <input name="genero" required value="{{ pelicula.genero }}">
-            </div>
-            <div>
-                <label for="duracion">Duracion</label>
-                <input type="number" name="duracion" required value="{{ pelicula.duracion }}">
-            </div>
-            <div>
-                <label for="inventario">Inventario</label>
-                <input type="number" name="inventario" required value="{{ pelicula.inventario }}">
-            </div>
-            <input type="submit" value="Actualizar">
-        </form>
+        <div class="content-update">
+            <form action="actualizar" method="post">
+                <div>
+                    <label for="id"></label>
+                    <input type="hidden" name="id" value="{{ pelicula.idPelicula }}">
+                </div>
+                <div>
+                    <label for="nombre">Nombre</label>
+                    <input name="nombre" required value="{{ pelicula.nombre }}">
+                </div>
+                <div>
+                    <label for="genero">Genero</label>
+                    <input name="genero" required value="{{ pelicula.genero }}">
+                </div>
+                <div>
+                    <label for="duracion">Duracion</label>
+                    <input type="number" name="duracion" required value="{{ pelicula.duracion }}">
+                </div>
+                <div>
+                    <label for="inventario">Inventario</label>
+                    <input type="number" name="inventario" required value="{{ pelicula.inventario }}">
+                </div>
+                <div>
+                    <input id="submit" type="submit" value="Actualizar">
+                </div>
+                <div>
+                    <a href="/movie">Cancelar</a>
+                </div>
+            </form>
+        </div>
         {%endif%}
+    </div>
+    <div class="content-back">
+        <a href="/">Regresar</a>
     </div>
 </body>
 </html>
