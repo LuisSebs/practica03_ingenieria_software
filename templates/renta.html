@@ -8,20 +8,69 @@
 </head>
 <body>
     <div>
-        <ul>
-            <li>
-                <a href="">Crear renta</a>
-            </li>
-            <li>
-                <a href="">Leer renta</a>
-            </li>
-            <li>
-                <a href="">Actualizar renta</a>
-            </li>
-            <li>
-                <a href="/">Regresar</a>
-            </li>
-        </ul>
+        <form action="registrar" method="post">
+            <div>
+                <label for="id_usuario">ID Usuario</label>
+                <input type="number" min="1" name="id_usuario" required value="{{ request.form.id_usuario }}">
+            </div>
+            <div>
+                <label for="id_pelicula">ID Pelicula</label>
+                <input type="number" min="1" name="id_pelicula" required value="{{ request.form.id_pelicula }}">
+            </div>
+            <div>
+                <label for="fecha_renta">Fecha de renta</label>
+                <input type="date" name="fecha_renta" required value="{{ request.form.fecha_renta }}">
+            </div> 
+            <div>
+                <label for="dias_de_renta">Dias de renta</label>
+                <input type="number" min="1" name="dias_de_renta" required value="{{ request.form.dias_de_renta }}">
+            </div>
+            <div>
+                <label for="estatus">Estatus</label>
+                <input type="number" min="0" max="1" name="estatus" required value="{{ request.form.estatus }}">
+            </div>
+            <input type="submit" value="Registrar">
+        </form>
+    </div>
+    <div>
+        <table>
+        <tr>
+            <td>ID</td>
+            <td>ID Usuario</td>
+            <td>ID Pelicula</td>
+            <td>Fecha Renta</td>
+            <td>Dias de Renta</td>
+            <td>Estatus</td>
+        </tr>
+        {% if rentas%}
+            {% for renta in rentas%}
+                <tr>
+                    <td>{{renta.idRentar}}</td>
+                    <td>{{renta.idUsuario}}</td>
+                    <td>{{renta.idPelicula}}</td>
+                    <td>{{renta.fecha_renta}}</td>
+                    <td>{{renta.dias_de_renta}}</td>
+                    <td>{{renta.estatus}}</td>
+                    <td><a href="{{url_for('rent.actualizar_renta', id=renta.idRentar)}}">Edit</a></td>
+                </tr>
+            {%endfor%}
+        {% endif%}
+        </table>
+    </div>
+    <div>
+        {% if renta%}
+        <form action="actualizar" method="post">
+            <div>
+                <label for="id"></label>
+                <input type="hidden" name="id" value="{{ renta.idRentar }}">
+            </div>
+            <div>
+                <label for="estatus">Estatus</label>
+                <input type="number" min="0" max="1" name="estatus" required value="{{ renta.estatus }}">
+            </div>
+            <input type="submit" value="Actualizar">
+        </form>
+        {%endif%}
     </div>
 </body>
 </html>
