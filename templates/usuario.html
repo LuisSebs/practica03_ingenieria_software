@@ -9,6 +9,13 @@
 </head>
 <body>
     <div class="content-create">
+        {% with messages = get_flashed_messages(category_filter=['error'])%}
+            {%for message in messages%}
+            <div class="errors-content">
+                <h1 class="error" style="color: red;">{{message}}</h1>
+            </div>
+            {%endfor%}
+        {% endwith%}
         <form action="registrar" method="post">
             <div class="field">
                 <label for="nombre">Nombre</label>

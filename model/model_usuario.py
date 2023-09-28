@@ -11,7 +11,11 @@ def get_user_by_id(id):
 
 def add_user(name, email, password, photo=None):
 
-    status = False
+    # Verificamos que el correo no exista
+    exists_email = Usuario.query.filter(Usuario.email == email).all();
+
+    if exists_email:
+        return False;
     
     # Contraseña encriptada
     password = sha256(cipher(password)).hexdigest()
@@ -19,9 +23,7 @@ def add_user(name, email, password, photo=None):
     db.session.add(nuevo_usuario)
     db.session.commit()
 
-    status = True
-
-    return status
+    return True
 
 def update_user_name(id, new_name):
     usuario = get_user_by_id(id)

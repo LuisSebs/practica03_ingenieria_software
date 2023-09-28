@@ -20,6 +20,10 @@ def registrar_usuario():
         password = request.form['passwd']
         correo = request.form['correo']
         status = add_user(nombre, correo, password)
+        # Si hubo un error al agregar al usuario
+        if not status:
+            flash('El correo que quieres registrar ya existe', 'error')
+
     return redirect(url_for('user.main_view_user_controller'))
 
 @user.route('/actualizar/<string:id>', methods=('GET', 'POST'))
